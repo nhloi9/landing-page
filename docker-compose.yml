@@ -1,0 +1,51 @@
+version: '3.9'
+services:
+  mongo:
+    image: mongo:7.0.0-rc6
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: drm
+      MONGO_INITDB_ROOT_PASSWORD: drm.123
+      MONGO_INITDB_DATABASE: landing-page
+    networks:
+      - sigma
+    ports:
+      - '27018:27017'
+    volumes:
+      - mongo-data:/data/db
+
+  node:
+    restart: on-failure
+    build: .
+    environment:
+      - PORT=3000
+      - NODE_ENV=development
+      - SOCKET_PORT=8080
+      - MONGO_SERVERS=mongo
+      - MONGO_USERNAME=drm
+      - MONGO_PASSWORD=drm.123
+      - ACCESS_TOKEN_EXP=1d
+      - ACTIVATE_TOKEN_EXP=1d
+      - FORGOT_PWD_EXP=2h
+      - CLIENT_URL=http://123.30.235.196:5388/landing-pages/v1/users
+
+    depends_on:
+      - mongo
+    networks:
+      - sigma
+
+  nginx:
+    build: ./nginx
+    ports:
+      - '8888:80'
+    depends_on:
+      - node
+    networks:
+      - sigma
+volumes:
+  mongo-data:
+    driver: local
+
+networks:
+  sigma:
+    driver: bridge

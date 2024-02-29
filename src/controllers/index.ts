@@ -1,0 +1,8 @@
+export * as userControllers from './user.controller'
+export * as freeTrialControllers from './free-trial.controller'
+export * as resourceControllers from './resource.controller'
+export * as commentControllers from './comment.controller'
+export * as fileControllers from './file.controller'
+export * as messageControllers from './message.controller'
+export * as conversationControllers from './conversation.controller'
+export * as socketControllers from './socket.controller'

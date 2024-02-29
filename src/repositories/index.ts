@@ -1,0 +1,6 @@
+export * as userRepo from './user'
+export * as freeTrialRepo from './free-trial'
+export * as resourceRepo from './resource'
+export * as commentRepo from './comment'
+export * as conversationRepo from './conversation'
+export * as messageRepo from './message'
